@@ -7,7 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -48,17 +50,16 @@ public final class QueryUtils {
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 
-            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
             JSONObject jsonObject = new JSONObject(SAMPLE_JSON_RESPONSE);
 
             // Getting JSON Array node
-            JSONArray quakes = jsonObject.getJSONArray("features");
+            JSONArray earthquakesArray = jsonObject.getJSONArray("features");
 
             // Looping through All Quakes
-            for (int i = 0; i < quakes.length(); i++) {
+            for (int i = 0; i < earthquakesArray.length(); i++) {
                 // Parse JSON object
-                JSONObject quakeObject = quakes.getJSONObject(i);
+                JSONObject quakeObject = earthquakesArray.getJSONObject(i);
                 // Get properties object
                 JSONObject properties = quakeObject.getJSONObject("properties");
 
@@ -67,10 +68,15 @@ public final class QueryUtils {
                 // Get location value
                 String location = properties.getString("place");
                 // Get time value
-                String time = properties.getString("time");
+                Long unixTime = properties.getLong("time");
+                // Convert unix time into {@link Date} object
+                Date dateObject = new Date(unixTime);
+                // Format date
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM DD, yyyy");
+                String dateToDisplay = dateFormatter.format(dateObject);
 
                 // Create {@link Earthquake} object
-                earthquakes.add(new Earthquake(magnitude.toString(), location, time));
+                earthquakes.add(new Earthquake(magnitude.toString(), location, dateToDisplay));
             }
 
         } catch (JSONException e) {
