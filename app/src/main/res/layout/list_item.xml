@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
-        android:minHeight="@dimen/list_item_height"
-        android:orientation="horizontal">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:padding="16dp">
 
     <TextView
-            android:id="@+id/magnitude_text_view"
+            android:id="@+id/magnitude"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            tools:text="4.3"/>
+            tools:text="8.9"/>
 
     <TextView
-            android:id="@+id/location_text_view"
+            android:id="@+id/location"
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/black"
-            tools:text="Roma"/>
-
-    <TextView
-            android:id="@+id/date_text_view"
-            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:gravity="center_vertical"
-            tools:text="Dec 23, 2017"/>
+            tools:text="San Francisco, CA"/>
+
+    <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Mar 6, 2010"/>
+
+    <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="3:00 PM"/>
 
 </LinearLayout>

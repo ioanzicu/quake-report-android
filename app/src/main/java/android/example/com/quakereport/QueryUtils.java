@@ -68,15 +68,10 @@ public final class QueryUtils {
                 // Get location value
                 String location = properties.getString("place");
                 // Get time value
-                Long unixTime = properties.getLong("time");
-                // Convert unix time into {@link Date} object
-                Date dateObject = new Date(unixTime);
-                // Format date
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM DD, yyyy");
-                String dateToDisplay = dateFormatter.format(dateObject);
+                Long date = properties.getLong("time");
 
                 // Create {@link Earthquake} object
-                earthquakes.add(new Earthquake(magnitude.toString(), location, dateToDisplay));
+                earthquakes.add(new Earthquake(magnitude.toString(), location, date));
             }
 
         } catch (JSONException e) {
