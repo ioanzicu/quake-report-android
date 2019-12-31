@@ -71,7 +71,7 @@ public final class QueryUtils {
                 Long date = properties.getLong("time");
 
                 // Create {@link Earthquake} object
-                earthquakes.add(new Earthquake(magnitude.toString(), location, date));
+                earthquakes.add(new Earthquake(magnitude, location, date));
             }
 
         } catch (JSONException e) {
