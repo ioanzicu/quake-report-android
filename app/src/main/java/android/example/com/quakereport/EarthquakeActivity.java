@@ -28,7 +28,7 @@ public class EarthquakeActivity extends AppCompatActivity {
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        EarthquakeAdapter adapter = new EarthquakeAdapter(
+        final EarthquakeAdapter adapter = new EarthquakeAdapter(
                 this, earthquakes);
 
         // Set the adapter on the {@link ListView}
@@ -40,18 +40,15 @@ public class EarthquakeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the {@link Earthquake} object at the given position the user clicked on
-                Earthquake earthquake = earthquakes.get(position);
+                Earthquake earthquake = adapter.getItem(position);
 
-                // Setup Browser Intent
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                // Convert the String URL into a URI object (to pass into the Intent constructor)
+                Uri earthquakeUri = Uri.parse(earthquake.getUrl());
 
-                // Get Earthquake URL
-                String url = earthquake.getUrl();
+                // Create a new intent to view the earthquake URI
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
 
-                // Setup URI parameter
-                browserIntent.setData(Uri.parse(url));
-
-                // Start Activity
+                // Send the intent to launch a new activity
                 startActivity(browserIntent);
             }
         });
