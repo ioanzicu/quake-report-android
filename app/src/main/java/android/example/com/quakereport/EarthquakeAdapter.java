@@ -23,7 +23,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
      * @param earthquakes A List of Word objects to display in a list
      */
     public EarthquakeAdapter(@NonNull Context context, ArrayList<Earthquake> earthquakes) {
-        super(context, 0);
+        super(context, 0, earthquakes);
     }
 
     @NonNull
@@ -54,7 +54,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         locationTextView.setText(currentQuake.getmLocation());
 
         // Find the TextView in the list_item.xml layout with the ID default_text_view
-        TextView dateTextView = listItemView.findViewById(R.id.location_text_view);
+        TextView dateTextView = listItemView.findViewById(R.id.date_text_view);
         // Get the default translation from the current WordAdapter object and
         // set this text on the number TextView
         dateTextView.setText(currentQuake.getmDate());
