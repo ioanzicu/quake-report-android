@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,10 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
      */
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
+    /** TextView that is displayed when the list is empty */
+    private TextView mEmptyStateTextView;
+
+    @NonNull
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,11 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(mAdapter);
+
+        // Set empty view if there are no earthquakes
+        mEmptyStateTextView = findViewById(R.id.empty_view);
+        earthquakeListView.setEmptyView(mEmptyStateTextView);
+
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected earthquake.
@@ -87,14 +97,19 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null,  this);
     }
 
+    @NonNull
     @Override
     public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
         return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
+    @NonNull
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+        // Set empty state text to display "No earthquakes found."
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
+
         // Clear the adapter of previous earthquake data
         if (mAdapter != null) {
             mAdapter.clear();
@@ -107,6 +122,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         }
     }
 
+    @NonNull
     @Override
     public void onLoaderReset(Loader<List<Earthquake>> loader) {
         // Loader reset, so we can clear out our existing data.
@@ -132,6 +148,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
          * We should not update the UI from a background thread, so we return a list of
          * {@link Earthquake}s as the result.
          */
+        @NonNull
         @Override
         protected List<Earthquake> doInBackground(String... urls) {
             // Don't perform the request if there are no URLs, or the first URL is null.
@@ -150,6 +167,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
          * query to USGS. Then we update the adapter with the new list of earthquakes,
          * which will trigger the ListView to re-populate its list items.
          */
+        @NonNull
         @Override
         protected void onPostExecute(List<Earthquake> data) {
             // Clear the adapter of previous earthquake data
